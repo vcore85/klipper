@@ -159,7 +159,7 @@ config HAVE_STM32_USBCANBUS
     bool
     depends on HAVE_STM32_USBFS || HAVE_STM32_USBOTG
     depends on HAVE_STM32_CANBUS || HAVE_STM32_FDCANBUS
-    depends on !MACH_STM32F1
+ #   depends on !MACH_STM32F1
     default y
 
 config MCU
@@ -191,7 +191,7 @@ config CLOCK_FREQ
     int
     default 48000000 if MACH_STM32F0
     default 64000000 if MACH_STM32F103 && STM32_CLOCK_REF_INTERNAL
-    default 72000000 if MACH_STM32F103
+    default 192000000 if MACH_STM32F103
     default 120000000 if MACH_STM32F207
     default 84000000 if MACH_STM32F401
     default 168000000 if MACH_STM32F4x5
