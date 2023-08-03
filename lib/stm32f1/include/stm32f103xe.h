@@ -9,7 +9,7 @@
   *          This file contains:
   *           - Data structures and the address mapping for all peripherals
   *           - Peripheral's registers declarations and bits definition
-  *           - Macros to access peripheral’s registers hardware
+  *           - Macros to access peripheralï¿½s registers hardware
   *  
   ******************************************************************************
   * @attention
@@ -140,6 +140,8 @@ typedef enum
   DMA2_Channel2_IRQn          = 57,     /*!< DMA2 Channel 2 global Interrupt                      */
   DMA2_Channel3_IRQn          = 58,     /*!< DMA2 Channel 3 global Interrupt                      */
   DMA2_Channel4_5_IRQn        = 59,     /*!< DMA2 Channel 4 and Channel 5 global Interrupt        */
+  USB_MAPHP_IRQn              = 73,     /*!< USB Device High Priority  */
+  USB_MAPLP_IRQn              = 74     /*!< USB Device Low Priority  */
 } IRQn_Type;
 
 /**
@@ -556,7 +558,14 @@ typedef struct
   __IO uint32_t APB1ENR;
   __IO uint32_t BDCR;
   __IO uint32_t CSR;
-
+  __IO uint32_t AHBRST;
+  uint32_t RESERVED0;
+  __IO uint32_t MISC1;
+  uint32_t  RESERVED[7];
+  __IO uint32_t MISC2;
+  __IO uint32_t MISC3;
+  uint32_t RESERVED1;
+  __IO uint32_t INITMAP;
 
 } RCC_TypeDef;
 
@@ -1447,6 +1456,11 @@ typedef struct
 #define RCC_CFGR_USBPRE_Pos                  (22U)                             
 #define RCC_CFGR_USBPRE_Msk                  (0x1UL << RCC_CFGR_USBPRE_Pos)     /*!< 0x00400000 */
 #define RCC_CFGR_USBPRE                      RCC_CFGR_USBPRE_Msk               /*!< USB Device prescaler */
+#define RCC_CFGR_USBPRE_DIV4		             0x8800000U		                    	/*!< PLL clock divided by 4 selected as USB CLOCK SOURCE */
+
+#define RCC_CFGR_PLLRANGE_Pos                  (31U)                             
+#define RCC_CFGR_PLLRANGE_Msk                  (0x1UL << RCC_CFGR_PLLRANGE_Pos)     /*!< 0x80000000 */
+#define RCC_CFGR_PLLRANGE                      RCC_CFGR_PLLRANGE_Msk               /*!< PLL RANGE GT 72MHZ */
 
 /*!< MCO configuration */
 #define RCC_CFGR_MCO_Pos                     (24U)                             
@@ -1862,7 +1876,28 @@ typedef struct
 #define RCC_CSR_LPWRRSTF_Msk                 (0x1UL << RCC_CSR_LPWRRSTF_Pos)    /*!< 0x80000000 */
 #define RCC_CSR_LPWRRSTF                     RCC_CSR_LPWRRSTF_Msk              /*!< Low-Power reset flag */
 
+/*******************  Bit definition for RCC_INITMAP register  ********************/  
+#define RCC_INITMAP_USBINITMAP_Pos                    (0U)                              
+#define RCC_INITMAP_USBINITMAP_Msk                    (0x1UL << RCC_INITMAP_USBINITMAP_Pos)       /*!< 0x00000001 */
+#define RCC_INITMAP_USBINITMAP                        RCC_INITMAP_USBINITMAP_Msk                 /*!< USBFS interupt remap enable */
 
+
+/*******************  Bit definition for RCC_MISC1 register  ********************/  
+#define RCC_MISC1_USBBUFS_Pos                    (24U)                              
+#define RCC_MISC1_USBBUFS_Msk                    (0x1UL << RCC_MISC1_USBBUFS_Pos)       /*!< 0x00000001 */
+#define RCC_MISC1_USBBUFS                        RCC_MISC1_USBBUFS_Msk                 /*!< USBFS interupt remap enable */
+#define RCC_MISC1_HICKDIV_Pos                    (25U)                              
+#define RCC_MISC1_HICKDIV_Msk                    (0x1UL << RCC_MISC1_HICKDIV_Pos)       /*!< 0x00000001 */
+#define RCC_MISC1_HICKDIV                        RCC_MISC1_HICKDIV_Msk                 /*!< USBFS interupt remap enable */
+
+
+/*******************  Bit definition for RCC_MISC3 register  ********************/  
+#define RCC_MISC3_HICK_TO_USB_Pos                    (8U)                              
+#define RCC_MISC3_HICK_TO_USB_Msk                    (0x1UL << RCC_MISC3_HICK_TO_USB_Pos)       /*!< 0x00000001 */
+#define RCC_MISC3_HICK_TO_USB                        RCC_MISC3_HICK_TO_USB_Msk                 /*!< USBFS interupt remap enable */
+#define RCC_MISC3_HICK_TO_SCLK_Pos                    (9U)                              
+#define RCC_MISC3_HICK_TO_SCLK_Msk                    (0x1UL << RCC_MISC3_HICK_TO_SCLK_Pos)       /*!<  */
+#define RCC_MISC3_HICK_TO_SCLK                        RCC_MISC3_HICK_TO_SCLK_Msk                 /*!< HICK_TO_SCLK enable */
  
 /******************************************************************************/
 /*                                                                            */
@@ -11711,9 +11746,9 @@ typedef struct
 #define TIM13_IRQn              TIM8_UP_IRQn
 #define CEC_IRQn                USBWakeUp_IRQn
 #define OTG_FS_WKUP_IRQn        USBWakeUp_IRQn
-#define USB_HP_IRQn             USB_HP_CAN1_TX_IRQn
+#define USB_HP_IRQn             USB_MAPHP_IRQn
 #define CAN1_TX_IRQn            USB_HP_CAN1_TX_IRQn
-#define USB_LP_IRQn             USB_LP_CAN1_RX0_IRQn
+#define USB_LP_IRQn             USB_MAPLP_IRQn
 #define CAN1_RX0_IRQn           USB_LP_CAN1_RX0_IRQn
 
 
@@ -11738,9 +11773,9 @@ typedef struct
 #define TIM13_IRQHandler              TIM8_UP_IRQHandler
 #define CEC_IRQHandler                USBWakeUp_IRQHandler
 #define OTG_FS_WKUP_IRQHandler        USBWakeUp_IRQHandler
-#define USB_HP_IRQHandler             USB_HP_CAN1_TX_IRQHandler
+#define USB_HP_IRQHandler             USB_MAPHP_IRQHandler
 #define CAN1_TX_IRQHandler            USB_HP_CAN1_TX_IRQHandler
-#define USB_LP_IRQHandler             USB_LP_CAN1_RX0_IRQHandler
+#define USB_LP_IRQHandler             USB_MAPLP_IRQHandler
 #define CAN1_RX0_IRQHandler           USB_LP_CAN1_RX0_IRQHandler
 
 
