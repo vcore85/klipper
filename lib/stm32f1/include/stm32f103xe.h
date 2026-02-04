@@ -561,7 +561,7 @@ typedef struct
   __IO uint32_t AHBRST;
   uint32_t RESERVED0;
   __IO uint32_t MISC1;
-  uint32_t  RESERVED[7];
+  uint32_t RESERVED[7];
   __IO uint32_t MISC2;
   __IO uint32_t MISC3;
   uint32_t RESERVED1;
@@ -1456,7 +1456,7 @@ typedef struct
 #define RCC_CFGR_USBPRE_Pos                  (22U)                             
 #define RCC_CFGR_USBPRE_Msk                  (0x1UL << RCC_CFGR_USBPRE_Pos)     /*!< 0x00400000 */
 #define RCC_CFGR_USBPRE                      RCC_CFGR_USBPRE_Msk               /*!< USB Device prescaler */
-#define RCC_CFGR_USBPRE_DIV4		             0x8800000U		                    	/*!< PLL clock divided by 4 selected as USB CLOCK SOURCE */
+#define RCC_CFGR_USBPRE_DIV4                 0x8800000U                        /*!< PLL clock divided by 4 selected as USB CLOCK SOURCE */
 
 #define RCC_CFGR_PLLRANGE_Pos                  (31U)                             
 #define RCC_CFGR_PLLRANGE_Msk                  (0x1UL << RCC_CFGR_PLLRANGE_Pos)     /*!< 0x80000000 */
@@ -1879,22 +1879,22 @@ typedef struct
 /*******************  Bit definition for RCC_INITMAP register  ********************/  
 #define RCC_INITMAP_USBINITMAP_Pos                    (0U)                              
 #define RCC_INITMAP_USBINITMAP_Msk                    (0x1UL << RCC_INITMAP_USBINITMAP_Pos)       /*!< 0x00000001 */
-#define RCC_INITMAP_USBINITMAP                        RCC_INITMAP_USBINITMAP_Msk                 /*!< USBFS interupt remap enable */
+#define RCC_INITMAP_USBINITMAP                        RCC_INITMAP_USBINITMAP_Msk                 /*!< USBFS interrupt remap enable */
 
 
 /*******************  Bit definition for RCC_MISC1 register  ********************/  
 #define RCC_MISC1_USBBUFS_Pos                    (24U)                              
 #define RCC_MISC1_USBBUFS_Msk                    (0x1UL << RCC_MISC1_USBBUFS_Pos)       /*!< 0x00000001 */
-#define RCC_MISC1_USBBUFS                        RCC_MISC1_USBBUFS_Msk                 /*!< USBFS interupt remap enable */
+#define RCC_MISC1_USBBUFS                        RCC_MISC1_USBBUFS_Msk                 /*!< USBFS buffer size selection */
 #define RCC_MISC1_HICKDIV_Pos                    (25U)                              
 #define RCC_MISC1_HICKDIV_Msk                    (0x1UL << RCC_MISC1_HICKDIV_Pos)       /*!< 0x00000001 */
-#define RCC_MISC1_HICKDIV                        RCC_MISC1_HICKDIV_Msk                 /*!< USBFS interupt remap enable */
+#define RCC_MISC1_HICKDIV                        RCC_MISC1_HICKDIV_Msk                 /*!< HICK clock divider selection */
 
 
 /*******************  Bit definition for RCC_MISC3 register  ********************/  
 #define RCC_MISC3_HICK_TO_USB_Pos                    (8U)                              
 #define RCC_MISC3_HICK_TO_USB_Msk                    (0x1UL << RCC_MISC3_HICK_TO_USB_Pos)       /*!< 0x00000001 */
-#define RCC_MISC3_HICK_TO_USB                        RCC_MISC3_HICK_TO_USB_Msk                 /*!< USBFS interupt remap enable */
+#define RCC_MISC3_HICK_TO_USB                        RCC_MISC3_HICK_TO_USB_Msk                 /*!< HICK to USB clock enable */
 #define RCC_MISC3_HICK_TO_SCLK_Pos                    (9U)                              
 #define RCC_MISC3_HICK_TO_SCLK_Msk                    (0x1UL << RCC_MISC3_HICK_TO_SCLK_Pos)       /*!<  */
 #define RCC_MISC3_HICK_TO_SCLK                        RCC_MISC3_HICK_TO_SCLK_Msk                 /*!< HICK_TO_SCLK enable */

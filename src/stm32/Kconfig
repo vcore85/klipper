@@ -169,7 +169,7 @@ config HAVE_STM32_USBCANBUS
     bool
     depends on HAVE_STM32_USBFS || HAVE_STM32_USBOTG
     depends on HAVE_STM32_CANBUS || HAVE_STM32_FDCANBUS
- #   depends on !MACH_STM32F1
+    # USB CAN bus bridge now supported on STM32F1 (including AT32F103)
     default y
 
 config MCU
