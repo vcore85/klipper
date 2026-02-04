@@ -75,9 +75,12 @@ clock_setup(void)
         cfgr = ((0 << RCC_CFGR_PLLSRC_Pos)
                 | ((div2 - 2) << RCC_CFGR_PLLMULL_Pos));
     }
-    cfgr |= RCC_CFGR_PPRE1_DIV2 | RCC_CFGR_PPRE2_DIV2 | RCC_CFGR_ADCPRE_DIV8;
+    // Configure peripheral clocks and AT32-specific PLL range/USB prescaler
+    cfgr |= RCC_CFGR_PPRE1_DIV2 | RCC_CFGR_PPRE2_DIV2 | RCC_CFGR_ADCPRE_DIV8 | RCC_CFGR_PLLRANGE | RCC_CFGR_USBPRE_DIV4;
     RCC->CFGR = cfgr;
     RCC->CR |= RCC_CR_PLLON;
+    // Enable USB interrupt remapping (required for AT32F103 compatibility)
+    RCC->INITMAP = RCC_INITMAP_USBINITMAP;
 
     // Set flash latency
     FLASH->ACR = (2 << FLASH_ACR_LATENCY_Pos) | FLASH_ACR_PRFTBE;
